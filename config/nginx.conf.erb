@@ -82,6 +82,10 @@ http {
       auth_basic_user_file <%= "#{ENV["HOME"]}/config/htpasswd" %>;
     <% end %>
 
+    location /apple-app-site-association {
+      default_type application/json;
+    }
+
     <% if ENV["API_URL"] %>
       location <%= ENV["API_PREFIX_PATH"] || "/api/" %> {
         proxy_pass <%= ENV["API_URL"] %>;
