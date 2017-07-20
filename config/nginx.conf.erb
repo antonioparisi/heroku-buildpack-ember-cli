@@ -35,7 +35,7 @@ http {
     server {
       listen <%= ENV["PORT"] %>;
       server_name <%= ENV["NAKED_DOMAIN"] %>;
-      return 301 $scheme://www.<%= ENV["NAKED_DOMAIN"] %>$request_uri;
+      return 302 $scheme://www.<%= ENV["NAKED_DOMAIN"] %>$request_uri;
     }
   <% end %>
 
@@ -63,7 +63,7 @@ http {
         set $cloudflare YES;
       }
       if ($http_cf_visitor ~* '"http"') {
-        return 301 https://$host$request_uri;
+        return 302 https://$host$request_uri;
       }
       set $cloudflare_heroku "${cloudflare}";
       if ($http_x_forwarded_proto ~* 'http') {
@@ -73,7 +73,7 @@ http {
         set $cloudflare_heroku "${cloudflare_heroku}HTTP";
       }
       if ($cloudflare_heroku = NOYESHTTP) {
-        return 301 https://$host$request_uri;
+        return 302 https://$host$request_uri;
       }
     <% end %>
 
